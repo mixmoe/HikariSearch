@@ -14,3 +14,4 @@ export const onRequest: PagesFunction = async ({ request, ...extra }) => {
 import './routes/SauceNAO';
 import './routes/IqDB';
 import './routes/ascii2d';
+import './routes/E-Hentai';
