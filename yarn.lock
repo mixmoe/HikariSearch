@@ -1374,6 +1374,48 @@
   dependencies:
     serialize-javascript "^5.0.1"
 
+"@ssttevee/blob-ponyfill@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmmirror.com/@ssttevee/blob-ponyfill/-/blob-ponyfill-0.1.0.tgz#c874d271164670f328eb6b0e07373cff50b26a80"
+  integrity sha512-JqjpKtbwYukrS24Vk/W4OfHeTWEssnggSUksZZGmCNmxrpwDP3d6BwUcUtOruazmdNp9fB2SXWophjSGZzLd7g==
+  dependencies:
+    "@ssttevee/u8-utils" "^0.1.3"
+
+"@ssttevee/cfw-formdata-polyfill@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.npmmirror.com/@ssttevee/cfw-formdata-polyfill/-/cfw-formdata-polyfill-0.2.1.tgz#e06c7c07f2718ce6fd2367551ae7dfbe9e0a2663"
+  integrity sha512-ZYKPk6Wv4KaYPQ3MXlmEoCRYc7llnp8Uyk/1dWkSrHXa+s1zrPHduV+cmm0Kc6+OMXitIskFIdkSjR8I4QVF5Q==
+  dependencies:
+    "@ssttevee/blob-ponyfill" "^0.1.0"
+    "@ssttevee/formdata-ponyfill" "^0.1.4"
+    "@ssttevee/multipart-parser" "^0.1.6"
+    "@ssttevee/u8-utils" "^0.1.3"
+
+"@ssttevee/formdata-ponyfill@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.npmmirror.com/@ssttevee/formdata-ponyfill/-/formdata-ponyfill-0.1.4.tgz#2957513aa2bfbbf6389198d7f756793fafec76be"
+  integrity sha512-8GeH2CmdUEqFO68I4XDjqG6z2QNCYfaYnqJ4U+RoQZsM6UXVyudjIUHaF1LLTcNFggyQvE5gUg5wvFZluYBWMw==
+
+"@ssttevee/multipart-parser@^0.1.6":
+  version "0.1.9"
+  resolved "https://registry.npmmirror.com/@ssttevee/multipart-parser/-/multipart-parser-0.1.9.tgz#972a8bffe7204aa3f519f53bc06adee3498df15b"
+  integrity sha512-4GmChu029N2VHdi3SEQMlqTctNRisGoE4HOLAsL7p6nrlWHQ63dqVZ2IsnI0HGizzt2/0MLFNlaF7EFBsuXK2g==
+  dependencies:
+    "@ssttevee/streamsearch" "~0.3.0"
+    "@ssttevee/u8-utils" "~0.1.5"
+
+"@ssttevee/streamsearch@~0.3.0":
+  version "0.3.1"
+  resolved "https://registry.npmmirror.com/@ssttevee/streamsearch/-/streamsearch-0.3.1.tgz#7f608ce5a1f77a2ac51e84a5c5a128c62f505828"
+  integrity sha512-qL6bEa8R1KlN0rcLVWaLZfS+IVi5nw51FlO54p8PbCkspM5G8ssZhcCNJjnPxSPNz1BqIIt0Rm4tALBilYx1dw==
+  dependencies:
+    "@ssttevee/u8-utils" "~0.1.5"
+
+"@ssttevee/u8-utils@^0.1.3", "@ssttevee/u8-utils@~0.1.5":
+  version "0.1.7"
+  resolved "https://registry.npmmirror.com/@ssttevee/u8-utils/-/u8-utils-0.1.7.tgz#fb8db35ca9dda860ad3eaf1b557f61e4d43950bc"
+  integrity sha512-bSD+ocJRyAWiav1w7iQmAJ+ao/DJ5cRLcs2VsFDQeA1pODdF8cVZYy69+/irAeEntYoFbKigID/eM389pZ3vMA==
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.npmmirror.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
@@ -1453,13 +1495,6 @@
     "@types/express-serve-static-core" "^4.17.18"
     "@types/qs" "*"
     "@types/serve-static" "*"
-
-"@types/form-data@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.npmmirror.com/@types/form-data/-/form-data-2.5.0.tgz#5025f7433016f923348434c40006d9a797c1b0e8"
-  integrity sha512-23/wYiuckYYtFpL+4RPWiWmRQH2BjFuqCUi2+N3amB1a1Drv+i/byTrGvlLwRVLFNAZbwpbQ7JvTK+VCAPMbcg==
-  dependencies:
-    form-data "*"
 
 "@types/html-minifier-terser@^6.0.0":
   version "6.1.0"
@@ -2076,11 +2111,6 @@ async@^3.2.0:
   resolved "https://registry.npmmirror.com/async/-/async-3.2.3.tgz#ac53dafd3f4720ee9e8a160628f18ea91df196c9"
   integrity sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==
 
-asynckit@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.npmmirror.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
-  integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
-
 at-least-node@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmmirror.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
@@ -2515,13 +2545,6 @@ colorette@^2.0.10:
   resolved "https://registry.npmmirror.com/colorette/-/colorette-2.0.16.tgz#713b9af84fdb000139f04546bd4a93f62a5085da"
   integrity sha512-hUewv7oMjCp+wkBv5Rm0v87eJhq4woh5rSR+42YSQJKecCqgIqNkZ6lAlQms/BwHPJA5NKMRlpxPRv0n8HQW6g==
 
-combined-stream@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.npmmirror.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
-  integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
-  dependencies:
-    delayed-stream "~1.0.0"
-
 commander@^2.19.0, commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.npmmirror.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
@@ -2918,11 +2941,6 @@ del@^6.0.0:
     p-map "^4.0.0"
     rimraf "^3.0.2"
     slash "^3.0.0"
-
-delayed-stream@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmmirror.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
-  integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
 depd@~1.1.2:
   version "1.1.2"
@@ -3695,15 +3713,6 @@ fork-ts-checker-webpack-plugin@6.5.0:
     schema-utils "2.7.0"
     semver "^7.3.2"
     tapable "^1.0.0"
-
-form-data@*:
-  version "4.0.0"
-  resolved "https://registry.npmmirror.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
-  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
-  dependencies:
-    asynckit "^0.4.0"
-    combined-stream "^1.0.8"
-    mime-types "^2.1.12"
 
 forwarded@0.2.0:
   version "0.2.0"
@@ -4669,7 +4678,7 @@ mime-db@1.51.0, "mime-db@>= 1.43.0 < 2":
   resolved "https://registry.npmmirror.com/mime-db/-/mime-db-1.51.0.tgz#d9ff62451859b18342d960850dc3cfb77e63fb0c"
   integrity sha512-5y8A56jg7XVQx2mbv1lu49NR4dokRnhZYTtL+KGfaa27uq4pSTXkwQkFJl4pkRMyNFz/EtYDSkiiEHx3F7UN6g==
 
-mime-types@^2.1.12, mime-types@^2.1.27, mime-types@^2.1.31, mime-types@~2.1.17, mime-types@~2.1.24, mime-types@~2.1.34:
+mime-types@^2.1.27, mime-types@^2.1.31, mime-types@~2.1.17, mime-types@~2.1.24, mime-types@~2.1.34:
   version "2.1.34"
   resolved "https://registry.npmmirror.com/mime-types/-/mime-types-2.1.34.tgz#5a712f9ec1503511a945803640fafe09d3793c24"
   integrity sha512-6cP692WwGIs9XXdOO4++N+7qjqv0rqxxVvJ3VHPh/Sc9mVZcQP+ZGhkKiTvWMQRr2tbHkJP/Yn7Y0npb3ZBs4A==

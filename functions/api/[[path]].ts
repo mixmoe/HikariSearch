@@ -1,3 +1,4 @@
+import '@ssttevee/cfw-formdata-polyfill';
 import { router } from './router';
 import { error } from 'itty-router-extras';
 
