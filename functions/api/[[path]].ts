@@ -15,3 +15,4 @@ import './routes/SauceNAO';
 import './routes/IqDB';
 import './routes/ascii2d';
 import './routes/E-Hentai';
+import './routes/TraceMoe';
