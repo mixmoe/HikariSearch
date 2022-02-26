@@ -1,9 +1,9 @@
 import * as cheerio from 'cheerio';
-import { json, StatusError } from 'itty-router-extras';
+import { json } from 'itty-router-extras';
 import * as _ from 'lodash';
 import Schema from 'schemastery';
 import { router } from '../router';
-import { validate } from '../utils';
+import { request, validate } from '../utils';
 
 export const BASE_URL = 'https://iqdb.org/';
 
@@ -55,16 +55,15 @@ export const schema = Schema.object({
   image: Schema.is(File).required(),
 });
 
-router.post('/IqDB', async (request: Request) => {
-  const { services, discolor, image } = await validate(request, schema);
+router.post('/IqDB', async (req: Request) => {
+  const { services, discolor, image } = await validate(req, schema);
+
   const form = new FormData();
+  form.append('file', image!);
   if (services) services.forEach((s) => form.append('service[]', s.toString()));
   if (discolor) form.append('forcegray', 'on');
-  form.append('file', image!);
-  const response = await fetch(BASE_URL, { method: 'POST', body: form })
-    .then((res) => res.text())
-    .catch((err: Error) => {
-      throw new StatusError(502, err.message);
-    });
+
+  const response = await request.post(BASE_URL, form).then((res) => res.text());
+
   return json(parse(response));
 });

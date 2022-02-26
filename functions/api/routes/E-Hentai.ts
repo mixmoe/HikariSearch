@@ -1,14 +1,14 @@
 import * as cheerio from 'cheerio';
-import { json, StatusError } from 'itty-router-extras';
+import { json } from 'itty-router-extras';
 import * as _ from 'lodash';
 import Schema from 'schemastery';
 import { router } from '../router';
-import { validate } from '../utils';
+import { request, validate } from '../utils';
 
 export const BASE_URLs = {
   eh: new URL('https://upld.e-hentai.org/image_lookup.php'),
   ex: new URL('https://exhentai.org/upld/image_lookup.php'),
-} as const;
+};
 
 export function parse(body: string) {
   const $ = cheerio.load(body);
@@ -41,27 +41,18 @@ export const schema = Schema.object({
   image: Schema.is(File).required(),
 });
 
-router.post('/E-Hentai', async (request: Request) => {
-  const { site, cover, deleted, similar, image } = await validate(
-    request,
-    schema
-  );
+router.post('/E-Hentai', async (req: Request) => {
+  const { site, cover, deleted, similar, image } = await validate(req, schema);
+
   const form = new FormData();
   form.append('sfile', image!);
   form.append('f_sfile', 'search');
   if (cover) form.append('fs_covers', 'on');
   if (similar) form.append('fs_similar', 'on');
   if (deleted) form.append('fs_exp', 'on');
-  const sent = new Request((site ?? BASE_URLs['eh']).href, {
-    method: 'POST',
-    body: form,
-    credentials: 'include',
-  });
-  sent.headers.set('Cookie', 'sl=dm_2');
-  const response = await fetch(sent)
-    .then((res) => res.text())
-    .catch((err: Error) => {
-      throw new StatusError(502, err.message);
-    });
+
+  const response = await request
+    .post(site ?? BASE_URLs['eh'], form, { headers: { Cookie: 'sl=dm_2' } })
+    .then((res) => res.text());
   return json(parse(response));
 });

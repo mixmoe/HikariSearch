@@ -1,9 +1,9 @@
 import * as cheerio from 'cheerio';
 import * as _ from 'lodash';
-import { StatusError, json } from 'itty-router-extras';
+import { json } from 'itty-router-extras';
 import Schema from 'schemastery';
 import { router } from '../router';
-import { validate } from '../utils';
+import { request, validate } from '../utils';
 
 export const BASE_URL = 'https://saucenao.com';
 
@@ -50,16 +50,15 @@ export const schema = Schema.object({
   image: Schema.is(File).required(),
 });
 
-router.post('/SauceNAO', async (request: Request) => {
-  const { hide, image } = await validate(request, schema);
+router.post('/SauceNAO', async (req: Request) => {
+  const { hide, image } = await validate(req, schema);
+
   const form = new FormData();
   form.append('file', image!);
   if (hide) form.append('hide', '3');
+
   const url = new URL('/search.php', BASE_URL);
-  const response = await fetch(url.href, { method: 'POST', body: form })
-    .then((res) => res.text())
-    .catch((err: Error) => {
-      throw new StatusError(502, err.message);
-    });
+  const response = await request.post(url, form).then((res) => res.text());
+
   return json(parse(response));
 });

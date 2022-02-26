@@ -1,7 +1,7 @@
 import { json, StatusError } from 'itty-router-extras';
 import Schema from 'schemastery';
 import { router } from '../router';
-import { validate } from '../utils';
+import { request, validate } from '../utils';
 
 export const BASE_URL = 'https://api.trace.moe';
 
@@ -48,17 +48,18 @@ export const schema = Schema.object({
   cutBorders: Schema.boolean().default(true),
 });
 
-router.post('/TraceMoe', async (request: Request) => {
-  const { image, cutBorders } = await validate(request, schema);
-  const form = new FormData();
+router.post('/TraceMoe', async (req: Request) => {
+  const { image, cutBorders } = await validate(req, schema);
+
+  const form = new FormData(),
+    url = new URL('/search', BASE_URL);
   form.append('image', image!);
-  const url = new URL('/search', BASE_URL);
   url.searchParams.append('anilistInfo', '1');
   if (cutBorders) url.searchParams.append('cutBorders', '1');
-  const response = await fetch(url.href, { method: 'POST', body: form })
-    .then((res) => res.json<TraceMoeResponse>())
-    .catch((err: Error) => {
-      throw new StatusError(502, err.message);
-    });
+
+  const response = await request
+    .post(url, form)
+    .then((res) => res.json<TraceMoeResponse>());
+
   return json(parse(response));
 });

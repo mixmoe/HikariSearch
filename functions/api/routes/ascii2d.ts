@@ -1,9 +1,9 @@
 import * as cheerio from 'cheerio';
-import { json, StatusError } from 'itty-router-extras';
+import { json } from 'itty-router-extras';
 import * as _ from 'lodash';
 import Schema from 'schemastery';
 import { router } from '../router';
-import { validate } from '../utils';
+import { request, validate } from '../utils';
 
 export const BASE_URL = 'https://ascii2d.obfs.dev/';
 
@@ -38,27 +38,21 @@ export const schema = Schema.object({
   image: Schema.is(File).required(),
 });
 
-router.post('/ascii2d', async (request: Request) => {
-  const { type, image } = await validate(request, schema);
+router.post('/ascii2d', async (req: Request) => {
+  const { type, image } = await validate(req, schema);
+
   const form = new FormData();
   form.append('file', image!);
+
   const url = new URL('/search/file', BASE_URL);
-  const colorResponse = await fetch(url.href, {
-    method: 'POST',
-    body: form,
-  }).catch((err: Error) => {
-    throw new StatusError(502, err.message);
-  });
+  const colorResponse = await request.post(url, form);
+
   let response: string;
   if (type === 'color') {
     response = await colorResponse.text();
   } else {
     const bovwUrl = colorResponse.url.replace('/color/', '/bovw/');
-    response = await fetch(bovwUrl)
-      .then((res) => res.text())
-      .catch((err: Error) => {
-        throw new StatusError(502, err.message);
-      });
+    response = await request.get(bovwUrl).then((res) => res.text());
   }
   return json(parse(response));
 });
