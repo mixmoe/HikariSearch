@@ -6,6 +6,15 @@
   "editor.codeActionsOnSave": [
     "source.fixAll.eslint"
   ],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "vue"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": [
+    "Hentai",
+    "Hikari"
+  ]
 }
