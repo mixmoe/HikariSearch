@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "description": "A collection of anime image search engine, based on Cloudflare Pages Function.",
   "productName": "Hikari Anime Image Search",
-  "author": "Mix",
-  "private": true,
+  "author": "Mix <32300164+mnixry@users.noreply.github.com>",
+  "repository": "github:mixmoe/HikariSearch",
+  "license": "LGPL-3.0",
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "echo \"No test specified\" && exit 0"
+    "dev:worker": "wrangler pages dev ./public",
+    "dev:front": "quasar dev"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
