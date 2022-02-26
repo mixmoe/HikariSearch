@@ -22,7 +22,10 @@ export function parse(body: string) {
     return {
       hash: hash.text(),
       info: info.text(),
-      image: new URL(image.attribs.src, BASE_URL).toString(),
+      image: new URL(
+        image.attribs['src'] ?? image.attribs['data-cfsrc'],
+        BASE_URL
+      ).toString(),
       source: source
         ? { link: source.attribs.href, text: $(source).text() }
         : undefined,
