@@ -41,7 +41,7 @@ export const schema = Schema.object({
   image: Schema.is(File).required(),
 });
 
-router.post('/E-Hentai', async (req: Request) => {
+router.post('/E-Hentai', async (req: Request, { env }) => {
   const { site, cover, deleted, similar, image } = await validate(req, schema);
 
   const form = new FormData();
@@ -51,8 +51,22 @@ router.post('/E-Hentai', async (req: Request) => {
   if (similar) form.append('fs_similar', 'on');
   if (deleted) form.append('fs_exp', 'on');
 
+  const { EH_COOKIE } = env as { EH_COOKIE?: string };
+  const cookies = new Map(
+    (EH_COOKIE?.split(';') ?? [])
+      .map(
+        (cookie) => cookie.trim().split('=', 1) as [string, string | undefined]
+      )
+      .map(([key, value]) => [key, value ?? ''])
+  );
+  cookies.set('sl', 'dm_2');
+  const cookieStr = [...cookies.entries()]
+    .map(([k, v]) => `${k}=${v}`)
+    .join('; ');
+  console.log(cookieStr);
+
   const response = await request
-    .post(site ?? BASE_URLs['eh'], form, { headers: { Cookie: 'sl=dm_2' } })
+    .post(site ?? BASE_URLs['eh'], form, { headers: { Cookie: cookieStr } })
     .then((res) => res.text());
   return json(parse(response));
 });
