@@ -43,3 +43,9 @@ export namespace API {
     types.TraceMoeParseResult
   >('./TraceMoe');
 }
+
+export function proxy(url: string) {
+  const requestUrl = new URL('/proxy', window.location.href);
+  requestUrl.searchParams.set('url', url);
+  return requestUrl.toString();
+}
