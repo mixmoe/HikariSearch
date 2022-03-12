@@ -36,13 +36,17 @@
       <q-separator />
       <q-card-section>
         <q-tabs v-model="tab">
+          <q-tab name="sauce" label="SauceNAO"></q-tab>
           <q-tab name="ascii2d" label="ascii2d"></q-tab>
         </q-tabs>
         <q-separator />
         <q-scroll-area style="height: 70vh">
-          <q-tab-panels v-model="tab" animated>
+          <q-tab-panels v-model="tab" animated keep-alive>
             <q-tab-panel name="ascii2d">
               <search-ascii2d :file="file!" />
+            </q-tab-panel>
+            <q-tab-panel name="sauce">
+              <search-sauce-n-a-o :file="file!" />
             </q-tab-panel>
           </q-tab-panels>
         </q-scroll-area>
@@ -53,6 +57,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import SearchAscii2d from 'src/components/SearchAscii2d.vue';
+import SearchSauceNAO from 'src/components/SearchSauceNAO.vue';
 
 const file = ref<File>(),
   preview = ref<string>(),
