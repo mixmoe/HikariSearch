@@ -39,6 +39,7 @@
           <q-tab name="sauce" label="SauceNAO"></q-tab>
           <q-tab name="ascii2d" label="ascii2d"></q-tab>
           <q-tab name="iq" label="IqDB"></q-tab>
+          <q-tab name="eh" label="EHentai"></q-tab>
         </q-tabs>
         <q-separator />
         <q-scroll-area style="height: 70vh">
@@ -52,6 +53,9 @@
             <q-tab-panel name="iq">
               <search-iq-d-b :file="file!" />
             </q-tab-panel>
+            <q-tab-panel name="eh">
+              <search-e-hentai :file="file!" />
+            </q-tab-panel>
           </q-tab-panels>
         </q-scroll-area>
       </q-card-section>
@@ -63,6 +67,7 @@ import { ref } from 'vue';
 import SearchAscii2d from 'src/components/SearchAscii2d.vue';
 import SearchSauceNAO from 'src/components/SearchSauceNAO.vue';
 import SearchIqDB from 'src/components/SearchIqDB.vue';
+import SearchEHentai from 'src/components/SearchEHentai.vue';
 
 const file = ref<File>(),
   preview = ref<string>(),
