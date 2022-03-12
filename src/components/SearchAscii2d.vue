@@ -22,12 +22,9 @@
         </div>
       </q-expansion-item>
     </q-list>
-    <q-scroll-area v-if="results" style="height: 70vh" class="shadow-1">
-      <q-card
-        v-for="(result, index) in results"
-        :key="index"
-        class="row justify-evenly items-center q-ma-sm shadow-1"
-      >
+    <q-separator v-if="results.length" spaced />
+    <div v-for="(result, index) in results" :key="index">
+      <q-card class="row justify-evenly items-center q-ma-md">
         <q-img class="col-2" :src="proxy(result.image)" loading="lazy" />
         <q-list separator padding class="col-8">
           <q-item>
@@ -74,7 +71,7 @@
           </q-item>
         </q-list>
       </q-card>
-    </q-scroll-area>
+    </div>
     <q-inner-loading :showing="loading" />
   </div>
 </template>
@@ -86,7 +83,7 @@ import { ref } from 'vue';
 const searchTypes = ['color', 'bovw'] as const;
 
 const type = ref<typeof searchTypes[number]>('color'),
-  results = ref<ascii2dParseResult>(),
+  results = ref<ascii2dParseResult>([]),
   props = defineProps<{ file?: File }>(),
   expandOptions = ref(true),
   loading = ref(false);

@@ -1,6 +1,6 @@
 <template>
-  <q-page class="row items-start justify-evenly q-pa-md">
-    <q-card class="shadow-1 col-12 col-sm-4 col-md-3 col-xl-2">
+  <q-page class="row items-center justify-evenly q-pa-md">
+    <q-card class="shadow-1 col-12 col-sm-4 col-xl-2">
       <div class="text-h5 q-pa-md">
         {{ $t('Search Image') }}
       </div>
@@ -31,7 +31,7 @@
       </q-card-section>
       <q-separator />
     </q-card>
-    <q-card class="shadow-2 col-12 col-sm-6">
+    <q-card class="shadow-2 col-12 col-sm-6 col-xl-8" style="height: 90vh">
       <div class="text-h5 q-pa-md">{{ $t('Search Options') }}</div>
       <q-separator />
       <q-card-section>
@@ -39,11 +39,13 @@
           <q-tab name="ascii2d" label="ascii2d"></q-tab>
         </q-tabs>
         <q-separator />
-        <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="ascii2d">
-            <search-ascii2d :file="file!" />
-          </q-tab-panel>
-        </q-tab-panels>
+        <q-scroll-area style="height: 70vh">
+          <q-tab-panels v-model="tab" animated>
+            <q-tab-panel name="ascii2d">
+              <search-ascii2d :file="file!" />
+            </q-tab-panel>
+          </q-tab-panels>
+        </q-scroll-area>
       </q-card-section>
     </q-card>
   </q-page>
