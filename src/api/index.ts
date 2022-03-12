@@ -1,4 +1,5 @@
 import _axios from 'axios';
+import { useQuasar } from 'quasar';
 import type * as types from './types';
 
 export const axios = _axios.create({
@@ -7,6 +8,11 @@ export const axios = _axios.create({
   responseType: 'json',
 });
 
+export interface ErrorResponse {
+  status: number;
+  error: string;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace API {
   function factory<R, S>(path: string): (schema: R) => Promise<S> {
@@ -14,7 +20,23 @@ export namespace API {
       const form = new FormData();
       for (const [key, value] of Object.entries(schema))
         form.append(key, value instanceof File ? value : JSON.stringify(value));
-      return await axios.post<S>(path, form).then((response) => response.data);
+
+      return await axios
+        .post<S>(path, form)
+        .then((response) => response.data)
+        .catch((error: Error) => {
+          const { notify } = useQuasar();
+          const response = _axios.isAxiosError(error)
+            ? <ErrorResponse>error.response?.data
+            : undefined;
+          notify({
+            message: response ? response.error : error.message,
+            caption: response?.status.toString(),
+            color: 'negative',
+            position: 'bottom',
+          });
+          throw error;
+        });
     };
   }
 
