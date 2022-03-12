@@ -5,22 +5,18 @@
         {{ $t('Search Image') }}
       </div>
       <q-separator />
-      <q-card-section>
-        <q-slide-transition>
-          <q-img
-            :ratio="1"
-            :src="preview"
-            class="shadow-1"
-            v-show="file"
-          ></q-img>
-        </q-slide-transition>
-      </q-card-section>
+      <q-slide-transition>
+        <q-card-section v-show="file">
+          <q-img :src="preview" class="rounded-borders shadow-2" />
+        </q-card-section>
+      </q-slide-transition>
       <q-card-section>
         <q-file
           v-model="file"
           :label="$t('Select an image')"
           @update:model-value="onImageChange"
           counter
+          clearable
           filled
           accept="image/*"
         >
@@ -44,21 +40,27 @@
         </q-tabs>
         <q-separator />
         <q-scroll-area style="height: 70vh">
-          <q-tab-panels v-model="tab" animated keep-alive>
+          <div v-if="!file" class="text-center q-py-xl text-grey text-h4">
+            {{ $t('Please select a image to search') }}
+          </div>
+          <div v-else-if="!tab" class="text-center q-py-xl text-grey text-h4">
+            {{ $t('Please select a site to start searching') }}
+          </div>
+          <q-tab-panels v-else v-model="tab" animated keep-alive>
             <q-tab-panel name="sauce">
-              <search-sauce-n-a-o :file="file!" />
+              <search-sauce-n-a-o :file="file" />
             </q-tab-panel>
             <q-tab-panel name="iq">
-              <search-iq-d-b :file="file!" />
+              <search-iq-d-b :file="file" />
             </q-tab-panel>
             <q-tab-panel name="ascii2d">
-              <search-ascii2d :file="file!" />
+              <search-ascii2d :file="file" />
             </q-tab-panel>
             <q-tab-panel name="eh">
-              <search-e-hentai :file="file!" />
+              <search-e-hentai :file="file" />
             </q-tab-panel>
             <q-tab-panel name="trace">
-              <search-trace-moe :file="file!" />
+              <search-trace-moe :file="file" />
             </q-tab-panel>
           </q-tab-panels>
         </q-scroll-area>
