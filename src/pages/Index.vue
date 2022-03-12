@@ -1,49 +1,68 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="row items-start justify-evenly q-pa-md">
+    <q-card class="shadow-1 col-12 col-sm-4 col-md-3 col-xl-2">
+      <div class="text-h5 q-pa-md">
+        {{ $t('Search Image') }}
+      </div>
+      <q-separator />
+      <q-card-section>
+        <q-slide-transition>
+          <q-img
+            :ratio="1"
+            :src="preview"
+            class="shadow-1"
+            v-show="file"
+          ></q-img>
+        </q-slide-transition>
+      </q-card-section>
+      <q-card-section>
+        <q-file
+          v-model="file"
+          :label="$t('Select an image')"
+          @update:model-value="onImageChange"
+          counter
+          filled
+          accept="image/*"
+        >
+          <template v-slot:prepend>
+            <q-icon name="add_photo_alternate" />
+          </template>
+        </q-file>
+      </q-card-section>
+      <q-separator />
+    </q-card>
+    <q-card class="shadow-2 col-12 col-sm-6">
+      <div class="text-h5 q-pa-md">{{ $t('Search Options') }}</div>
+      <q-separator />
+      <q-card-section>
+        <q-tabs v-model="tab">
+          <q-tab name="ascii2d" label="ascii2d"></q-tab>
+        </q-tabs>
+        <q-separator />
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="ascii2d">
+            <search-ascii2d :file="file!" />
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
+<script setup lang="ts">
+import { ref } from 'vue';
+import SearchAscii2d from 'src/components/SearchAscii2d.vue';
 
-<script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/CompositionComponent.vue';
-import { defineComponent, ref } from 'vue';
+const file = ref<File>(),
+  preview = ref<string>(),
+  tab = ref<string>();
 
-export default defineComponent({
-  name: 'PageIndex',
-  components: { ExampleComponent },
-  setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
-    });
-    return { todos, meta };
-  }
-});
+function onImageChange() {
+  if (!file.value) return;
+  const reader = new FileReader();
+  reader.onload = ({ target }) => {
+    console.log(target?.result);
+    preview.value = target?.result as string;
+  };
+  reader.readAsDataURL(file.value);
+}
 </script>
