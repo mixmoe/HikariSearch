@@ -65,7 +65,7 @@
               <q-icon name="more" color="yellow" />
             </q-item-section>
             <q-item-section>
-              <q-item-label overline>{{ $t('More sources') }}</q-item-label>
+              <q-item-label overline>{{ $t('More sources:') }}</q-item-label>
               <q-item-label v-for="(misc, index) in result.misc" :key="index">
                 <a :href="misc">{{ misc }}</a>
               </q-item-label>
