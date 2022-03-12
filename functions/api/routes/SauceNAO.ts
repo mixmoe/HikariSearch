@@ -24,20 +24,10 @@ export function parse(body: string) {
       title: title.text(),
       similarity: parseFloat(similarity.text()),
       misc: _.map(misc, (m) => m.attribs.href),
-      content: _.map(content, (element) => {
-        let result = $(element).text();
-        switch (element.tagName) {
-          case 'a':
-            result += `↪️${element.attribs.href}`;
-            break;
-          case 'br':
-            result += '\n';
-            break;
-        }
-        return result;
-      })
-        .filter((s) => s.length > 0)
-        .join(''),
+      content: _.map(content, (element) => ({
+        text: $(element).text(),
+        link: element.attribs.href as string | undefined,
+      })).filter(({ text }) => text.length > 0),
     };
   })
     .filter(<T>(v: T | undefined): v is T => v !== undefined)
