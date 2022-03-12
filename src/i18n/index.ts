@@ -1,5 +1,3 @@
-import enUS from './en-US';
-
-export default {
-  'en-US': enUS
-};
+export default async () => ({
+  'en-US': (await import('./locales/en-US.json')).default,
+});

@@ -3,10 +3,10 @@ import { createI18n } from 'vue-i18n';
 
 import messages from 'src/i18n';
 
-export default boot(({ app }) => {
+export default boot(async ({ app }) => {
   const i18n = createI18n({
     locale: 'en-US',
-    messages,
+    messages: await messages(),
   });
 
   // Set i18n instance on app
