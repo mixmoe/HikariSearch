@@ -1,5 +1,5 @@
 import _axios from 'axios';
-import { useQuasar } from 'quasar';
+import { Notify } from 'quasar';
 import type * as types from './types';
 
 export const axios = _axios.create({
@@ -9,8 +9,8 @@ export const axios = _axios.create({
 });
 
 export interface ErrorResponse {
-  status: number;
-  error: string;
+  status?: number;
+  error?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -25,13 +25,14 @@ export namespace API {
         .post<S>(path, form)
         .then((response) => response.data)
         .catch((error: Error) => {
-          const { notify } = useQuasar();
           const response = _axios.isAxiosError(error)
             ? <ErrorResponse>error.response?.data
             : undefined;
-          notify({
-            message: response ? response.error : error.message,
-            caption: response?.status.toString(),
+          Notify.create({
+            message:
+              response?.status && response.error
+                ? `${response.status} - ${response.error}`
+                : error.message,
             color: 'negative',
             position: 'bottom',
           });
