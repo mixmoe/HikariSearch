@@ -37,24 +37,28 @@
       <q-card-section>
         <q-tabs v-model="tab">
           <q-tab name="sauce" label="SauceNAO"></q-tab>
-          <q-tab name="ascii2d" label="ascii2d"></q-tab>
           <q-tab name="iq" label="IqDB"></q-tab>
+          <q-tab name="ascii2d" label="ascii2d"></q-tab>
           <q-tab name="eh" label="EHentai"></q-tab>
+          <q-tab name="trace" label="TraceMoe"></q-tab>
         </q-tabs>
         <q-separator />
         <q-scroll-area style="height: 70vh">
           <q-tab-panels v-model="tab" animated keep-alive>
-            <q-tab-panel name="ascii2d">
-              <search-ascii2d :file="file!" />
-            </q-tab-panel>
             <q-tab-panel name="sauce">
               <search-sauce-n-a-o :file="file!" />
             </q-tab-panel>
             <q-tab-panel name="iq">
               <search-iq-d-b :file="file!" />
             </q-tab-panel>
+            <q-tab-panel name="ascii2d">
+              <search-ascii2d :file="file!" />
+            </q-tab-panel>
             <q-tab-panel name="eh">
               <search-e-hentai :file="file!" />
+            </q-tab-panel>
+            <q-tab-panel name="trace">
+              <search-trace-moe :file="file!" />
             </q-tab-panel>
           </q-tab-panels>
         </q-scroll-area>
@@ -68,6 +72,7 @@ import SearchAscii2d from 'src/components/SearchAscii2d.vue';
 import SearchSauceNAO from 'src/components/SearchSauceNAO.vue';
 import SearchIqDB from 'src/components/SearchIqDB.vue';
 import SearchEHentai from 'src/components/SearchEHentai.vue';
+import SearchTraceMoe from 'src/components/SearchTraceMoe.vue';
 
 const file = ref<File>(),
   preview = ref<string>(),
