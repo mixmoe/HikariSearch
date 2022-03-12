@@ -1,3 +1,3 @@
 export default async () => ({
-  'en-US': (await import('./locales/en-US.json')).default,
+  'zh-CN': (await import('./locales/zh-CN.json')).default,
 });

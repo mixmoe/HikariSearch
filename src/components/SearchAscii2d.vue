@@ -87,12 +87,12 @@ const searchTypes = ['color', 'bovw'] as const;
 
 const type = ref<typeof searchTypes[number]>('color'),
   results = ref<ascii2dParseResult>(),
-  props = defineProps<{ file: File }>(),
+  props = defineProps<{ file?: File }>(),
   expandOptions = ref(true),
   loading = ref(false);
 
 async function submitImage() {
-  if (!props.file && type.value) return;
+  if (!(props.file && type.value)) return;
   try {
     loading.value = true;
     results.value = await API.ascii2d({
@@ -103,9 +103,5 @@ async function submitImage() {
   } finally {
     loading.value = false;
   }
-}
-
-function source(url: string) {
-  return new URL(url).hostname;
 }
 </script>
