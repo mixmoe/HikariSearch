@@ -12,5 +12,9 @@
   "Search on SauceNAO": "在 SauceNAO 上搜索",
   "Hide sensitive content": "隐藏敏感内容",
   "Image similarity:": "图片相似度:",
-  "More sources:": "更多来源:"
+  "More sources:": "更多来源:",
+  "Search on IqDB": "在 IqDB 上搜索",
+  "Image databases": "图片数据来源",
+  "Search without color": "搜索时去除颜色",
+  "Image ranking level:": "图片评级:"
 }
