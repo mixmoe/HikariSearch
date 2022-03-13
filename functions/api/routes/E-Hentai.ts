@@ -63,7 +63,6 @@ router.post('/E-Hentai', async (req: Request, { env }) => {
   const cookieStr = [...cookies.entries()]
     .map(([k, v]) => `${k}=${v}`)
     .join('; ');
-  console.log(cookieStr);
 
   const response = await request
     .post(site ?? BASE_URLs['eh'], form, { headers: { Cookie: cookieStr } })
