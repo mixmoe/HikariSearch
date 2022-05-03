@@ -6,6 +6,9 @@ export const axios = _axios.create({
   baseURL: '/api/',
   timeout: 24 * 1000,
   responseType: 'json',
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
 });
 
 export interface ErrorResponse {
@@ -16,13 +19,9 @@ export interface ErrorResponse {
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace API {
   function factory<R, S>(path: string): (schema: R) => Promise<S> {
-    return async (schema: R) => {
-      const form = new FormData();
-      for (const [key, value] of Object.entries(schema))
-        form.append(key, value instanceof File ? value : JSON.stringify(value));
-
-      return await axios
-        .post<S>(path, form)
+    return async (schema: R) =>
+      await axios
+        .post<S>(path, schema)
         .then((response) => response.data)
         .catch((error: Error) => {
           const response = _axios.isAxiosError(error)
@@ -38,7 +37,6 @@ export namespace API {
           });
           throw error;
         });
-    };
   }
 
   export const SauceNAO = factory<
