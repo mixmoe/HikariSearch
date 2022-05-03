@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "types": [
       "@cloudflare/workers-types"
-    ]
+    ],
+    "jsx": "preserve"
   },
 }
