@@ -6,15 +6,14 @@
       </div>
       <q-separator />
       <q-slide-transition>
-        <q-card-section v-show="file">
+        <q-card-section v-show="preview">
           <q-img :src="preview" class="rounded-borders shadow-2" />
         </q-card-section>
       </q-slide-transition>
       <q-card-section>
         <q-file
-          v-model="file"
+          v-model="image"
           :label="$t('Select an image')"
-          @update:model-value="onImageChange"
           counter
           clearable
           filled
@@ -40,7 +39,7 @@
         </q-tabs>
         <q-separator />
         <q-scroll-area style="height: 70vh">
-          <div v-if="!file" class="text-center q-py-xl text-grey text-h4">
+          <div v-if="!image" class="text-center q-py-xl text-grey text-h4">
             {{ $t('Please select a image to search') }}
           </div>
           <div v-else-if="!tab" class="text-center q-py-xl text-grey text-h4">
@@ -48,19 +47,19 @@
           </div>
           <q-tab-panels v-else v-model="tab" animated keep-alive>
             <q-tab-panel name="sauce">
-              <search-sauce-n-a-o :file="file" />
+              <search-sauce-n-a-o :file="image" />
             </q-tab-panel>
             <q-tab-panel name="iq">
-              <search-iq-d-b :file="file" />
+              <search-iq-d-b :file="image" />
             </q-tab-panel>
             <q-tab-panel name="ascii2d">
-              <search-ascii2d :file="file" />
+              <search-ascii2d :file="image" />
             </q-tab-panel>
             <q-tab-panel name="eh">
-              <search-e-hentai :file="file" />
+              <search-e-hentai :file="image" />
             </q-tab-panel>
             <q-tab-panel name="trace">
-              <search-trace-moe :file="file" />
+              <search-trace-moe :file="image" />
             </q-tab-panel>
           </q-tab-panels>
         </q-scroll-area>
@@ -69,23 +68,46 @@
   </q-page>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import SearchAscii2d from 'src/components/SearchAscii2d.vue';
 import SearchSauceNAO from 'src/components/SearchSauceNAO.vue';
 import SearchIqDB from 'src/components/SearchIqDB.vue';
 import SearchEHentai from 'src/components/SearchEHentai.vue';
 import SearchTraceMoe from 'src/components/SearchTraceMoe.vue';
+import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
-const file = ref<File>(),
+const $q = useQuasar(),
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  { t } = useI18n({ useScope: 'global' });
+
+const image = ref<File>(),
   preview = ref<string>(),
   tab = ref<string>();
 
-function onImageChange() {
-  if (!file.value) return;
+watch(image, (file) => {
+  if (!file) return;
+
   const reader = new FileReader();
-  reader.onload = ({ target }) => {
-    preview.value = target?.result as string;
+  reader.onload = () => {
+    preview.value = reader.result as string;
   };
-  reader.readAsDataURL(file.value);
-}
+  reader.readAsDataURL(file);
+});
+
+onMounted(() => {
+  document.onpaste = ({ clipboardData }) => {
+    const file = (
+      clipboardData?.items.length ? [...clipboardData.items] : undefined
+    )?.find((item) => item.kind === 'file');
+    if (!file || !file.type.startsWith('image/')) return;
+
+    $q.dialog({
+      title: t('Paste Image'),
+      message: t('Do you want to paste this image'),
+    }).onOk(() => (image.value = file.getAsFile() ?? undefined));
+  };
+});
+
+onBeforeUnmount(() => (document.onpaste = null));
 </script>
