@@ -25,16 +25,16 @@ export function parse(body: string) {
       [link] = $('td.image > a', result),
       [image] = $('td.image img', result);
     if (!link) return;
-    const [, similarity] = content.match(/(\d+%)\s*similarity/)!,
-     level = content.match(/\[(\w+)\]/)[0]
-    let resolution = content.match(/(\d+×\d+)/)
-    resolution ? (resolution = '未知') : (resolution = resolution[0])
+    const [, similarity] = content.match(/(\d+%)\s*similarity/) ?? [],
+      [, level] = content.match(/\[(\w+)\]/) ?? [],
+      [, resolution] = content.match(/(\d+×\d+)/) ?? [];
+
     return {
       url: new URL(link.attribs.href, BASE_URL).toString(),
       image: new URL(image.attribs.src, BASE_URL).toString(),
       similarity: parseFloat(similarity),
-      resolution,
-      level: level.toLowerCase(),
+      resolution: resolution,
+      level: level,
     };
   })
     .filter(<T>(v: T | undefined): v is T => v !== undefined)
