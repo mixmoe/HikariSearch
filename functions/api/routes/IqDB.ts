@@ -26,7 +26,9 @@ export function parse(body: string) {
       [image] = $('td.image img', result);
     if (!link) return;
     const [, similarity] = content.match(/(\d+%)\s*similarity/)!,
-      [, resolution, level] = content.match(/(\d+×\d+)\s*\[(\w+)\]/)!;
+     level = content.match(/\[(\w+)\]/)[0]
+    let resolution = content.match(/(\d+×\d+)/)
+    resolution ? (resolution = '未知') : (resolution = resolution[0])
     return {
       url: new URL(link.attribs.href, BASE_URL).toString(),
       image: new URL(image.attribs.src, BASE_URL).toString(),
