@@ -17,7 +17,7 @@ export function parse(body: string) {
       content = $('.resultcontentcolumn > *', result);
     if (title.length <= 0) return;
     const hiddenImage = image.attr('data-src2'),
-      imageUrl = hiddenImage ? hiddenImage : image.attr('src');
+      imageUrl = image.attr('data-src') ?? hiddenImage ?? '';
     return {
       image: new URL(<string>imageUrl, BASE_URL).toString(),
       hidden: !!hiddenImage,
